@@ -125,7 +125,7 @@ def adjust_object_class(obj_class):
     text_obj_class = str(obj_class)
 
     for classes in traffic_sign_classes.items():
-        print(classes)
+        # print(classes)
         for class_ in classes[1]:
             text_class = str(class_)
             if (text_obj_class == text_class) | ((re.search("_r|_n", text_class) != None) & (text_class[:-1] in text_obj_class)):
