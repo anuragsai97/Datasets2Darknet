@@ -4,7 +4,7 @@
 # in order to use them in YOLO. Besides, it generate a txt with all the paths to the converted images in darknet format.
 # By Angel Igareta for SaferAuto [https://github.com/angeligareta/SaferAuto]
 import csv
-from common_config import *
+from src.common_config import *
 
 # TO CHANGE
 RTSDD_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/RTSD-D/"

@@ -2,7 +2,7 @@
 import csv
 import re
 import os.path
-from common_config import *
+from src.common_config import *
 
 # TO CHANGE
 INPUT_PATH = "/media/angeliton/Backup1/DBs/Traffic Light/LISATL/"

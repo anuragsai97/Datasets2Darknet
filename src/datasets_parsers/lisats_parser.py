@@ -4,10 +4,11 @@
 # in order to use them in YOLO. Besides, it generate a txt with all the paths to the converted images in darknet format.
 # By Angel Igareta for SaferAuto [https://github.com/angeligareta/SaferAuto]
 import csv
-from common_config import *
 
 # TO CHANGE
-LISATS_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/LISATS/"
+from src.common_config import *
+
+LISATS_ROOT_PATH = "/LISA/"
 RESIZE_PERCENTAGE = 0.8
 DB_PREFIX = 'lisats-'
 
