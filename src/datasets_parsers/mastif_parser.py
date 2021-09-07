@@ -2,7 +2,7 @@
 import csv
 import re
 import os.path
-from src.common_config import *
+from common_config import *
 
 # TO CHANGE
 MASTIF_ROOT_PATH = "/media/angeliton/Backup1/DBs/Road Signs/MASTIF/"

@@ -4,11 +4,10 @@
 # in order to use them in YOLO. Besides, it generate a txt with all the paths to the converted images in darknet format.
 # By Angel Igareta for SaferAuto [https://github.com/angeligareta/SaferAuto]
 import csv
+from common_config import *
 
 # TO CHANGE
-from src.common_config import *
-
-LISATS_ROOT_PATH = "/LISA/"
+LISATS_ROOT_PATH = "/kaggle/working/LISA/"
 RESIZE_PERCENTAGE = 0.8
 DB_PREFIX = 'lisats-'
 
