@@ -6,14 +6,13 @@
 import csv
 from common_config import *
 
-# TO CHANGE
 LISATS_ROOT_PATH = "/kaggle/working/LISA/"
 RESIZE_PERCENTAGE = 0.8
 DB_PREFIX = 'lisats-'
 
 
 COMBINED_ANNOTATIONS_FILE_PATH = LISATS_ROOT_PATH + "allAnnotations.csv"
-INPUT_PATH = LISATS_ROOT_PATH + "input-img/"
+INPUT_PATH = LISATS_ROOT_PATH + "/"
 BACKGROUND_IMG_PATH = LISATS_ROOT_PATH + "input-img-bg/"
 
 
