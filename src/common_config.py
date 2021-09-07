@@ -10,8 +10,13 @@ import matplotlib.patches as patches
 from PIL import Image
 
 # TO CHANGE
-CLASS_NUMBER = 10 
-classes_names = ["PROHIBITORY", "DANGER", "MANDATORY", "INFORMATION", "STOP", "YIELD", "NOENTRY", "TL-RED", "TL-AMBER", "TL-GREEN", "FALSE_NEGATIVES"]
+CLASS_NUMBER = 28
+classes_names = ["addedLane", "curveRight", "dip", "intersection", "laneEnds", "merge",
+                 "pedestrianCrossing", "signalAhead", "stopAhead", "thruMergeLeft", "thruMergeRight",
+                 "turnLeft", "turnRight", "yieldAhead", "doNotPass", "keepRight", "rightLaneMustTurn",
+                 "speedLimit15", "speedLimit25", "speedLimit30", "speedLimit35", "speedLimit40",
+                 "speedLimit45", "speedLimit50", "speedLimit55", "speedLimit65", "truckSpeedLimit55",
+                 "speedLimitUrdbl", "stop"]
 
 # No need to change
 OTHER_CLASS = CLASS_NUMBER + 1 # Class that will contain all the negative samples.
