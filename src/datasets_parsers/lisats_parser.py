@@ -18,8 +18,36 @@ BACKGROUND_IMG_PATH = LISATS_ROOT_PATH + "input-img-bg/"
 
 def initialize_traffic_sign_classes():
     traffic_sign_classes.clear()
-    traffic_sign_classes["4-stop"] = ["stop"]
-    traffic_sign_classes["5-yield"] = ["yield"]
+    traffic_sign_classes["0-addedLane"] = ["addedLane"]
+    traffic_sign_classes["1-stop"] = ["stop"]
+    traffic_sign_classes["2-curveRight"] = ["curveRight"]
+    traffic_sign_classes["3-dip"] = ["dip"]
+    traffic_sign_classes["4-intersection"] = ["intersection"]
+    traffic_sign_classes["5-laneEnds"] = ["laneEnds"]
+    traffic_sign_classes["6-merge"] = ["merge"]
+    traffic_sign_classes["7-pedestrianCrossing"] = ["pedestrianCrossing"]
+    traffic_sign_classes["8-signalAhead"] = ["signalAhead"]
+    traffic_sign_classes["9-stopAhead"] = ["stopAhead"]
+    traffic_sign_classes["10-thruMergeLeft"] = ["thruMergeLeft"]
+    traffic_sign_classes["11-thruMergeRight"] = ["thruMergeRight"]
+    traffic_sign_classes["12-turnLeft"] = ["turnLeft"]
+    traffic_sign_classes["13-turnRight"] = ["turnRight"]
+    traffic_sign_classes["14-yieldAhead"] = ["yieldAhead"]
+    traffic_sign_classes["15-doNotPass"] = ["doNotPass"]
+    traffic_sign_classes["16-keepRight"] = ["keepRight"]
+    traffic_sign_classes["17-rightLaneMustTurn"] = ["rightLaneMustTurn"]
+    traffic_sign_classes["18-speedLimit15"] = ["speedLimit15"]
+    traffic_sign_classes["19-speedLimit25"] = ["speedLimit25"]
+    traffic_sign_classes["20-speedLimit30"] = ["speedLimit30"]
+    traffic_sign_classes["21-speedLimit35"] = ["speedLimit35"]
+    traffic_sign_classes["22-speedLimit40"] = ["speedLimit40"]
+    traffic_sign_classes["23-speedLimit45"] = ["speedLimit45"]
+    traffic_sign_classes["24-speedLimit50"] = ["speedLimit50"]
+    traffic_sign_classes["25-speedLimit55"] = ["speedLimit55"]
+    traffic_sign_classes["26-speedLimit65"] = ["speedLimit65"]
+    traffic_sign_classes["27-truckSpeedLimit55"] = ["truckSpeedLimit55"]
+    traffic_sign_classes["28-speedLimitUrdbl"] = ["speedLimitUrdbl"]
+
     traffic_sign_classes[str(OTHER_CLASS) + "-" + OTHER_CLASS_NAME] = []
 
 
@@ -37,6 +65,7 @@ def calculate_darknet_format(input_img, row):
     top_y = float(row[5]) / height_proportion
 
     object_class = row[1]
+    # print(object_class)
     object_class_adjusted = adjust_object_class(object_class)  # Adjust class category
 
     if SHOW_IMG:
@@ -77,6 +106,8 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
             input_img = read_img_plt(file_path)
             darknet_label = calculate_darknet_format(input_img, row)
             object_class_adjusted = int(darknet_label.split()[0])
+
+            # print(object_class_adjusted)
 
             if filename not in img_labels.keys():  # If it is the first label for that img
                 img_labels[filename] = [file_path]
