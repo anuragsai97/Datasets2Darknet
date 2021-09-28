@@ -6,7 +6,7 @@
 import csv
 from common_config import *
 
-LISATS_ROOT_PATH = "/kaggle/working/LISA/"
+LISATS_ROOT_PATH = "/content/LISA/"
 RESIZE_PERCENTAGE = 0.8
 DB_PREFIX = 'lisats-'
 
