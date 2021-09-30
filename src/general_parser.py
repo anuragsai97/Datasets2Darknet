@@ -21,7 +21,7 @@ DATASETS_NAMES = ["LISATS"]
 
 # Main method.
 @click.command()
-@click.option('--root_path', default="C:/Users/anees/Documents/Research CNN/LISATS/", help='Path where you want to save the dataset.')
+@click.option('--root_path', default="/content/LISATS/", help='Path where you want to save the dataset.')
 @click.option('--train_pct', default=TRAIN_PROB, help='Percentage of train images in final dataset. Format (0.0 - 1.0)')
 @click.option('--test_pct', default=TEST_PROB, help='Percentage of test images in final dataset. Format (0.0 - 1.0)')
 @click.option('--valid_pct', default=TEST_PROB, help='Percentage of valid images in final dataset. Format (0.0 - 1.0)')

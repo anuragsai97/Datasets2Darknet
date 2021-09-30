@@ -6,7 +6,7 @@
 import csv
 from common_config import *
 
-LISATS_ROOT_PATH = "C:/Users/anees/Documents/Research CNN/LISA/"
+LISATS_ROOT_PATH = "/content/LISA/"
 RESIZE_PERCENTAGE = 0.8
 DB_PREFIX = 'lisats-'
 
