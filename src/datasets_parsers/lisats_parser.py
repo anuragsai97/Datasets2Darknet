@@ -6,7 +6,7 @@
 import csv
 from common_config import *
 
-LISATS_ROOT_PATH = "/content/LISA/"
+LISATS_ROOT_PATH = "C:/Users/anees/Documents/Research CNN/LISA/"
 RESIZE_PERCENTAGE = 0.8
 DB_PREFIX = 'lisats-'
 
@@ -74,17 +74,18 @@ def calculate_darknet_format(input_img, row):
     return parse_darknet_format(object_class_adjusted, image_width, image_height, left_x, bottom_y, right_x, top_y)
 
 
-def update_global_variables(train_pct, test_pct, color_mode, verbose, false_data, output_img_ext):
-    global TRAIN_PROB, TEST_PROB, COLOR_MODE, SHOW_IMG, ADD_FALSE_DATA, OUTPUT_IMG_EXTENSION
+def update_global_variables(train_pct, test_pct, valid_pct, color_mode, verbose, false_data, output_img_ext):
+    global TRAIN_PROB, TEST_PROB, VALID_PROB, COLOR_MODE, SHOW_IMG, ADD_FALSE_DATA, OUTPUT_IMG_EXTENSION
     TRAIN_PROB = train_pct
     TEST_PROB = test_pct
+    VALID_PROB = valid_pct
     COLOR_MODE = color_mode
     SHOW_IMG = verbose
     ADD_FALSE_DATA = false_data
     OUTPUT_IMG_EXTENSION = output_img_ext
 
 
-def read_dataset(output_train_text_path, output_test_text_path, output_train_dir_path, output_test_dir_path):
+def read_dataset(output_train_text_path, output_test_text_path, output_valid_text_path, output_train_dir_path, output_test_dir_path, output_valid_dir_path):
     img_labels = {}  # Set of images and its labels [filename]: [()]
     update_db_prefix(DB_PREFIX)
     initialize_traffic_sign_classes()
@@ -92,6 +93,7 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
 
     train_text_file = open(output_train_text_path, "a+")
     test_text_file = open(output_test_text_path, "a+")
+    valid_text_file = open(output_valid_text_path, "a+")
 
     gt_file = open(COMBINED_ANNOTATIONS_FILE_PATH)  # Annotations file
     gt_reader = csv.reader(gt_file, delimiter=';')  # CSV parser for annotations file
@@ -138,12 +140,20 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
 
         # Get percentage for train and another for testing
         train_file = rand.choices([True, False], [TRAIN_PROB, TEST_PROB])[0]
+        file_type = rand.choices(["train", "test", "valid"], [TRAIN_PROB, TEST_PROB, VALID_PROB])[0]
         output_filename = DB_PREFIX + filename
 
-        if train_file:
-            write_data(output_filename, input_img, input_img_labels, train_text_file, output_train_dir_path, train_file)
+        if file_type == "train":
+            write_data_updated(output_filename, input_img, input_img_labels, train_text_file, output_train_dir_path, file_type)
+        elif file_type == "test":
+            write_data_updated(output_filename, input_img, input_img_labels, test_text_file, output_test_dir_path, file_type)
         else:
-            write_data(output_filename, input_img, input_img_labels, test_text_file, output_test_dir_path, train_file)
+            write_data_updated(output_filename, input_img, input_img_labels, valid_text_file, output_valid_dir_path, file_type)
+
+        # if train_file:
+        #     write_data(output_filename, input_img, input_img_labels, train_text_file, output_train_dir_path, train_file)
+        # else:
+        #     write_data(output_filename, input_img, input_img_labels, test_text_file, output_test_dir_path, train_file)
 
         # max_imgs -= 1
         # if max_imgs == 0:
@@ -152,8 +162,9 @@ def read_dataset(output_train_text_path, output_test_text_path, output_train_dir
     gt_file.close()
     train_text_file.close()
     test_text_file.close()
+    valid_text_file.close()
 
-    return classes_counter_train, classes_counter_test
+    return classes_counter_train, classes_counter_test, classes_counter_valid
 
 
 # read_dataset(OUTPUT_TRAIN_TEXT_PATH, OUTPUT_TEST_TEXT_PATH, OUTPUT_TRAIN_DIR_PATH, OUTPUT_TEST_DIR_PATH)

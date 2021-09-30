@@ -24,9 +24,11 @@ OTHER_CLASS_NAME = 'other'
 
 classes_counter_train = [0] * (CLASS_NUMBER + 1)
 classes_counter_test = [0] * CLASS_NUMBER
+classes_counter_valid = [0] * CLASS_NUMBER
 
 TRAIN_PROB = 0.8
-TEST_PROB = 0.2
+TEST_PROB = 0.1
+VALID_PROB = 0.1
 ADD_FALSE_DATA = False
 
 SHOW_IMG = False # Show each image being processed (verbose)
@@ -51,6 +53,9 @@ def initialize_classes_counter():
 
     for i in range(0, len(classes_counter_test)):
         classes_counter_test[i] = 0
+
+    for i in range(0, len(classes_counter_valid)):
+        classes_counter_valid[i] = 0
     
 # Method that updates the db_prefix. 
 # (Necessary at the start of each datasets parser)
@@ -193,6 +198,34 @@ def write_data(filename, input_img, input_img_labels, text_file, output_dir, tra
     f.write(labels_to_print)
 
 
+# Saves the image received in the output file path in the OUTPUT_IMG_EXTENSION.
+# Saves the filename in the general training/testing file.
+# Saves the filename and darknet labels for each object in the txt file with the image filename.
+def write_data_updated(filename, input_img, input_img_labels, text_file, output_dir, file_type):
+    output_file_path = output_dir + filename
+
+    # Save file in general training/testing file
+    text_file.write(output_file_path + OUTPUT_IMG_EXTENSION + "\n")
+    # Save file in correct folder
+    write_img(output_file_path, input_img)
+
+    # SAVE TXT FILE WITH THE IMG
+    f = open(output_file_path + '.txt', "a")
+    labels_to_print = ""
+    for input_img_label in input_img_labels:
+        labels_to_print += input_img_label + "\n"
+
+        object_class = int(input_img_label.split()[0])
+        if file_type == "train":
+            classes_counter_train[object_class] += 1
+        elif file_type == "test":
+            classes_counter_test[object_class] += 1
+        else:
+            classes_counter_valid[object_class] += 1
+
+    f.write(labels_to_print)
+
+
 # Chooses a total number of bg_files randomly from background_img_path and 
 # saves them as background images in the training set.
 def add_bg_data(total_bg_files, background_img_path, output_train_dir_path, train_text_file):
@@ -247,16 +280,19 @@ def print_class_info(classes_counter):
 
 
 # Prints the train classes, test classes and proportion train-test for a DB.
-def print_db_info(classes_counter_train, classes_counter_test):
+def print_db_info(classes_counter_train, classes_counter_test, classes_counter_valid):
     print("[TRAIN FILES]")
     print_class_info(classes_counter_train)
 
     print("\n[TEST FILES]")
     print_class_info(classes_counter_test)
 
+    print("\n[VALID FILES]")
+    print_class_info(classes_counter_valid)
+
     print("\n[PROPORTION]")
-    for i in range(0, min(len(classes_counter_train), len(classes_counter_test))):
-        total_classes = classes_counter_train[i] + classes_counter_test[i]
+    for i in range(0, min(len(classes_counter_train), len(classes_counter_test), len(classes_counter_train))):
+        total_classes = classes_counter_train[i] + classes_counter_test[i] + classes_counter_valid[i]
         if total_classes == 0:
             total_classes = 1
         print('\t- CLASS ' + str(i) + " - " + classes_names[i] + ' : ' + "{:.2f}%".format(classes_counter_test[i] / total_classes * 100.0))
